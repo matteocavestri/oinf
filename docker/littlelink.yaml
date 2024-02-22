@@ -1,0 +1,46 @@
+version: "3.0"
+services:
+  littlelink-server:
+    image: timothystewart6/littlelink-server:latest
+    # dockerhub is also supported timothystewart6/littlelink-server
+    # image: timothystewart6/littlelink-server:latest
+    container_name: littlelink-server
+    environment:
+      - META_TITLE= # NAME
+      - META_DESCRIPTION= # DESCRIPTION
+      - META_AUTHOR= # AUTHOR
+      - META_KEYWORDS= # KEYWORDS
+      - LANG=it
+      - META_INDEX_STATUS=all
+      - OG_SITE_NAME= # SITE NAME
+      - OG_TITLE= # SITE TITLE
+      - OG_DESCRIPTION= # SITE DESCTIPTION
+      - OG_URL= #URL --> reverse proxy or cloudflared
+      - OG_IMAGE= # YOUR PHOTO
+      - OG_IMAGE_WIDTH=400
+      - OG_IMAGE_HEIGHT=400
+      - GA_TRACKING_ID=G-XXXXXXXXXX
+      - THEME=Dark
+      - FAVICON_URL= # FAVICON
+      - AVATAR_URL= # AVATAR PHOTO
+      - AVATAR_2X_URL= # AVATAR ZOOM
+      - AVATAR_ALT= # AVATAR ALT DESCRIPTION
+      - NAME= # NAME (DISPLAYED)
+      - BIO= # DISPLAYED BIO
+      - BUTTON_ORDER=EMAIL,MASTODON,LINKED_IN,INSTAGRAM,GITHUB,DISCORD,PAYPAL # EXAMPLE ORDER
+      - EMAIL= #MAIL
+      - EMAIL_TEXT= # NAME TO SHOW
+      - MASTODON= # https://MASTODONSERVER/@USER
+      - GITHUB= # https://github.com/USER
+      - INSTAGRAM= # https://www.instagram.com/USER/
+      - LINKED_IN= # LINKEDIN PROFILE LINK
+      - DISCORD= # DISCORD PROFILE LINK
+      - PAYPAL= # https://paypal.me/USER
+      - FOOTER= # Your Name © 202x
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+networks: {}
+

@@ -1,0 +1,7 @@
+- hosts: "rhel"
+  become: true
+  tasks:
+    - name: Aggiorna tutti i pacchetti
+      dnf:
+        name: "*"
+        state: latest

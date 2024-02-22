@@ -1,0 +1,5 @@
+- hosts: "linux"
+  become: true
+  tasks:
+    - name: Shutdown all linux machines
+      community.general.shutdown:

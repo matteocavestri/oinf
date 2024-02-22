@@ -1,0 +1,18 @@
+- hosts: "docker-hm"
+  tasks:
+    - name: Obtaining disks usage
+      command: df -h
+      register: disk_usage
+    - name: Chech free space
+      shell: df -h / | awk 'NR==2 {print $5}'
+      register: disk_usage
+    - name: Send Discord Message
+      uri:
+        url: # "DICORD WEBHOOK HERE"
+        method: POST
+        body_format: json
+        body: '{"content": "Free space on {{ inventory_hostname }} is less than 20%!"}'
+        headers:
+          Content-Type: application/json
+        status_code: 204
+      when: disk_usage.stdout[:-1]|int > 80

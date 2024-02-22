@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  coder:
+    restart: always
+    image: ghcr.io/coder/coder:${CODER_VERSION:-latest}
+    ports:
+      - 7080:7080
+    environment:
+      CODER_PG_CONNECTION_URL: postgresql://${POSTGRES_USER:-username}:${POSTGRES_PASSWORD:-password}@database/${POSTGRES_DB:-coder}?sslmode=disable
+      CODER_HTTP_ADDRESS: 0.0.0.0:7080
+      CODER_ACCESS_URL: https://coder.cavestri.net
+    group_add:
+      - "996" # docker group on host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    restart: always
+    image: postgres:14.2
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-username}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-coder}
+    volumes:
+      - coder_data:/var/lib/postgresql/data # Use "docker volume rm coder_coder_data" to reset Coder
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER:-username} -d ${POSTGRES_DB:-coder}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+volumes:
+  coder_data: null
+networks: {}
