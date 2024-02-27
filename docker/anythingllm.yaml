@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm
+    ports:
+      - "3001:3001"
+    volumes:
+      - ~/.docker/anythingllm-data:/app/server/storage   # Directory anythingllm-data must exist
+      - ~/.docker/anythingllm-data/.env:/app/server/.env # .env must exist
+    environment:
+      - STORAGE_DIR=/app/server/storage
+    cap_add:
+      - SYS_ADMIN
+
+
