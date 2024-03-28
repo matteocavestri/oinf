@@ -10,7 +10,7 @@ services:
       - META_DESCRIPTION= # DESCRIPTION
       - META_AUTHOR= # AUTHOR
       - META_KEYWORDS= # KEYWORDS
-      - LANG=it
+      - LANG=it # Set your language
       - META_INDEX_STATUS=all
       - OG_SITE_NAME= # SITE NAME
       - OG_TITLE= # SITE TITLE
@@ -43,4 +43,3 @@ services:
     security_opt:
       - no-new-privileges:true
 networks: {}
-
